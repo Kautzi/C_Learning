@@ -1,14 +1,11 @@
 #include <stdio.h>
-
+//Erstes Beispielprog um Speicheradressen aus zu lesen
 int main()
 {
-    int a = 4;
-    int b = 3;
-    int c = 0;
+    int value = 12;
 
-    printf("a=%d, b=%d\n", a, b);
-    printf("Call binom function!\n");
-    printf("c=%d\n", c);
+    printf("Der Wert von Value ist %d", value);
 
+    printf("\nDie Adresse von Value lautet %x", &value);
     return 0;
 }
