@@ -5,7 +5,8 @@ int main()
 {
 
     int length = 0;
-    int *array = (int *)malloc((int)length * sizeof(int));
+    int *array = NULL;
+
     do
     {
 
@@ -20,10 +21,13 @@ int main()
 
         else
         {
-            array = realloc(
+            array = (int *)malloc((int)length * sizeof(int));
+            /*array = realloc(
                 array,
                 (int)length *
                     sizeof(int)); // reserviert Speicher in größe von "length * (größe eines Int speicherplatzes)
+
+            */
             break;
         }
 
