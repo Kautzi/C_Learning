@@ -9,9 +9,9 @@ The Programm should have functions to
 //****FUNC DECLARATION****
 
 int *createArray(unsigned int length, int value);
-void freeArray(int *array);
+int *freeArray(int *array);
 int **createMultiDimArray(unsigned int rows, unsigned int colls, int value);
-void freeMultiDimArray(int **array, unsigned int rows, unsigned int colls);
+void freeMultiDimArray(int **array, unsigned int rows);
 void printArray(int *array, unsigned int length);
 void printMultiDimArray(int **array, unsigned int rows, unsigned int colls);
 
@@ -30,7 +30,7 @@ int main()
     int **matrix = createMultiDimArray(2, 3, 277);
 
     printMultiDimArray(matrix, 2, 3);
-    freeMultiDimArray(matrix, 2, 3);
+    freeMultiDimArray(matrix, 2);
 
     return 0;
 }
@@ -58,12 +58,13 @@ int *createArray(unsigned int length, int value)
 
 /*+++++++++++++++++++++++++++*/
 //****FUNC freeArray()****
-void freeArray(int *array)
+int *freeArray(int *array)
 {
     //printf("\nAddress of Array before free() 0x%x", array[0]);
     free(array);
     //printf("\nAddress of Array after free() 0x%x", array[0]);
     array = NULL;
+    return array;
     //printf("\nAddress of Array after NULL 0x%x", array[0]);
 }
 //****END FUNC freeArray****
@@ -116,14 +117,12 @@ void printMultiDimArray(int **array, unsigned int rows, unsigned int colls)
 
 /*++++++++++++++++++++++++++*/
 //****FUNC freeMultiDimArray()****
-void freeMultiDimArray(int **array, unsigned int rows, unsigned int colls)
+void freeMultiDimArray(int **array, unsigned int rows)
 {
     for (unsigned int i = 0; i < rows; i++)
     {
-        for (unsigned int j = 0; j < colls; j++)
-        {
-            free(array[i][j]);
-        }
+
+        array[i] = freeArray(array[i]);
     }
 }
 
