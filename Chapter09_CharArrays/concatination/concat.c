@@ -29,9 +29,15 @@ char *concate(char *string_1, size_t length_1, char *string_2);
 int main()
 {
 
-    char *string_1 = (char *)calloc(sizeof(char), 5); //string_1 gets at first only 5 chars later
-                                                      //func concat should dynaically allocates new chars
+    char *string_1 = (char *)calloc(sizeof(char), 10); //string_1 gets at first only 10 chars later
+                                                       //  func concat should dynaically allocates new chars
+    char *string_2 = (char *)calloc(sizeof(char), 3);
 
+
+    string_1 = "Hallo";
+    string_2 = "du";
+    string_1 = concate(string_1, 10, string_2);
+    printf("%s", string_1);
 
     return 0;
 }
@@ -49,13 +55,13 @@ char *concate(char *string_1, size_t length_1, char *string_2)
     size_t string_2_count = 0;
 
     //first check if string_1 or string_2 are NULL
-    if (string_1 == NULL || string_2 == NULL)
+    if ((string_1 == NULL) || (string_2 == NULL))
     {
         return NULL;
     }
     //then check if there is any content inside string_1 and string_2
     //and init the count variables with "1"
-    if (*string_1 != '\0' && *string_2 != '\0')
+    if (*string_1 != '\0' && *string_2 != '\0') //works only if the strings where initialised by calloc
     {
         string_1_count = 1;
         string_2_count = 1;
@@ -71,19 +77,21 @@ char *concate(char *string_1, size_t length_1, char *string_2)
     while (*string_1 != '\0')
     {
         string_1_count++;
-        *string_1++;
+        string_1++;
     }
     //then check the length of string_2
     while (*string_2 != '\0')
     {
         string_2_count++;
-        *string_2++;
+        string_2++;
     }
     //now check if the difference of the actual length of
     //string_1 and the content of string_1 is grater or equal to the content of string_2
-    if ((length_1 - string_1_count) <= string_2_count)
+    if ((length_1 - string_1_count) >= string_2_count)
     {
         //if string_1 is greate enough start concatination
+        for (long unsigned int i = 0; i < string_2_count; i++)
+            string_1[string_1_count++] = string_2[i];
     }
     else
     {
