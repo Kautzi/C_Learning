@@ -9,23 +9,13 @@ void binom(int a, int b, int *c);
 int main()
 {
 
-    int first = 0;
-    int second = 0;
-    int result = 0;
-
-    printf("\nGebe den ersten Parameter ein:");
-    scanf("%d", &first);
-
-
-    printf("\nGebe den zweiten Parameter ein:");
-    scanf("%d", &second);
-
-    //Berechne die erste binomische Formel
+    int first = 8;
+    int second = 5;
+    int result;
 
     binom(first, second, &result);
 
-    printf("\nDas Ergebnis der ersten Binomischen Formel ist %d.", result);
-
+    printf("The Result of (%d + %d)to the power of 2 is = %d", first, second, result);
 
     return 0;
 }
@@ -36,7 +26,7 @@ int main()
 void binom(int a, int b, int *c)
 {
 
-    *c = (a * a) + (2 * a * b) + b * b;
+    *c = (a + b) * (a + b);
 }
 
 //*****END DEFINITION**************
