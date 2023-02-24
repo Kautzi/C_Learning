@@ -5,10 +5,11 @@
 The programm creates a function to allocate
 dynamically memory for an array.
 The Function createarray takes the length and the init Value
-for that array
+for thatarray
 */
 
-#define LENGTH 5
+
+#define LENGTH 4
 
 //### Fnction Declaration ###
 int * create_array(unsigned int length, int value);
