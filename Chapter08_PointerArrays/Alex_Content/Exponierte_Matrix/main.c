@@ -73,7 +73,7 @@ void print_array(int *array, uint32_t length)
     }
 }
 
-//the free_array func will free the memory alocated by func create array
+//the free_array func will free the memory alocated by func creat array
 int* free_array(int *array)
 {
     if(array == NULL)
@@ -97,6 +97,7 @@ int **create_2D_array(uint32_t num_row, uint32_t num_col, int init_value)
 
 
     }
+
     return array_2D;
 }
 //The print_2D_array takes an int** array and prints all it rows and cols
