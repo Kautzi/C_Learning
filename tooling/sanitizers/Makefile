@@ -2,6 +2,7 @@ DEBUG_FLAGS = -g3 -ggdb3 -O0
 RELEASE_FLAGS = -DNDEBUG -O3
 WARNING_FLAGS = -Wall -Wpedantic -Wshadow
 SANITIZER_FLAGS = -fsanitize=address
+ANALYZER_FLAG = -fanalyzer
 
 FLAGS = $(DEBUG_FLAGS) $(WARNING_FLAGS) $(SANITIZER_FLAGS)
 
