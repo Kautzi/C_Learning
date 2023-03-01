@@ -41,14 +41,30 @@ int main()
 
     char** friends = create_Friendbook(num_friends);
 
-    strcpy(friends[0],"Alexander Kautz");
-    strcpy(friends[1],"IRIS Kautz");
-    strcpy(friends[2],"Michael Schloter");
+    strncpy(friends[0],"Alexander Kautz",20);
+    strncpy(friends[1],"IRIS Kautz",20);
+    strncpy(friends[2],"Michael Schloter",20);
 
     for(uint32_t i = 0 ; i < num_friends; i++)
     {
         printf("%s\n",friends[i]);
     }
+
+    long unsigned int length0= strlen(friends[0]);//strlen gibt die länge eines strings ohne \0 wieder
+    long unsigned int length1= strlen(friends[1]);
+    long unsigned int length2= strlen(friends[2]);
+
+    printf("%lu\n",length0);
+    printf("%lu\n",length1);
+    printf("%lu\n",length2);
+
+    int compare0 = strncmp(friends[0],friends[1],30);//strncmp vergleicht zwei strings wenn sie gleich sind wird 0 zurück gegeben benötigt die Anzahl der zu vergleichenden Zeichen
+    int compare1 = strncmp(friends[0],friends[2],30);
+    int compare2 = strncmp(friends[1],friends[1],30);
+
+    printf("%d\n",compare0);
+    printf("%d\n",compare1);
+    printf("%d\n",compare2);
 
     friends = freeFriendbook(friends,num_friends);
     return 0;
