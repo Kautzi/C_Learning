@@ -1,6 +1,7 @@
 #include <stdio.h>
 
-struct Friend
+//TYPEDEF 1.
+typedef struct Friend //typedef kann auch in der typdefinition wie hier verwendet werden, üblich
 {
     char name[50];
     char prename[50];
@@ -8,14 +9,19 @@ struct Friend
     unsigned int month;
     unsigned int day;
 
-};
+}Friend_t; //der durch typedef verwendete NAme muss dann hinter dem geschweiften klammernpaar angegebene werden
+
+//TYPEDEF 2.
+//typedef: Wenn typedef verwendet wird muss der durch typedef angewendete typ vorher bekannt sein
+
+//typedef struct Friend Friend_t
 
 //### Function Declaration ###
 //Wenn eine struktur als pointer einer function übergeben wird muss aus dem Zugriffsoperator
 // zBsp: friend.name ==> friend->name werden
 
 //der -> Operator ersätzt die derefferenzierungsmethode über (*friend).prename beispielsweise
-void print_friend(struct Friend *friend)
+void print_friend(Friend_t *friend)
 {
     printf("%s %s\n",friend->prename,friend->name);
     printf("%u.%u.%u\n",friend->day,friend->month,friend->year);
@@ -26,10 +32,10 @@ void print_friend(struct Friend *friend)
 int main()
 {
     //way to initialise a struct
-    struct Friend jan = {.name="Kautz",.prename = "Alex",.year = 1989, .month = 9, .day = 14 };
+    Friend_t jan = {.name="Kautz",.prename = "Alex",.year = 1989, .month = 9, .day = 14 };
 
-    struct Friend peter = {.name="Lustig",.prename = "Peter",.year = 1960, .month = 3, .day = 2 };
-    struct Friend hans = {.name="Maier",.prename = "Hans",.year = 1940, .month = 12, .day = 3 };
+    Friend_t peter = {.name="Lustig",.prename = "Peter",.year = 1960, .month = 3, .day = 2 };
+    Friend_t hans = {.name="Maier",.prename = "Hans",.year = 1940, .month = 12, .day = 3 };
 
     //strukturen in arrays abspeichern
 
