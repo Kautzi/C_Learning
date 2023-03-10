@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
+#include <stdlib.h>
 
 /*# Exercise
 
@@ -18,8 +19,8 @@ Willkommen bei der nächsten Programmier-Übung in diesem Kurs.
 
 typedef struct
 {
-  int array[50];
-  int length;
+  int *array;
+  size_t length;
 }Vector_t;
 
 //### END Structs ###
@@ -29,6 +30,7 @@ typedef struct
 int min(Vector_t * Vector);
 int max(Vector_t * Vector);
 int mean(Vector_t * Vector);
+int * create_array(size_t length, int init);
 //### END Function Declaration ###
 
 
@@ -36,17 +38,13 @@ int mean(Vector_t * Vector);
 
 int main()
 {
-    Vector_t Vector;
+    Vector_t Vector ={.array=create_array(3,1),.length=3};
 
-    Vector.array[0]=2;
-    Vector.array[1]=5;
-    Vector.array[2]=-10;
-    Vector.array[3]=55;
-    Vector.array[4]=-200;
-    Vector.array[5]=8;
-    Vector.array[6]=0;
+    Vector.array[0]= 200;
+    Vector.array[1]= -10;
+    Vector.array[2]= -30;
 
-    Vector.length = sizeof(*Vector->array / Vector.array[0]);
+
 
     printf("%d\n",min(&Vector));
 
@@ -62,12 +60,24 @@ int main()
 int min(Vector_t *Vector)
 {
     int min = Vector -> array[0];
-    for(int i = 1; i < Vector->length; i ++)
+    for(size_t i = 1; i < Vector->length; i ++)
     {
         if(Vector->array[i] < min)
         {
         min = Vector->array[i];
         }
     }
-  return 0;
+  return min;
+}
+
+int *create_array(size_t length, int init)
+{
+
+  int * array = (int*)malloc(sizeof(int)*length);
+
+  for(size_t i = 0; i < length; i++)
+  {
+    array[i]=init;
+  }
+  return array;
 }
