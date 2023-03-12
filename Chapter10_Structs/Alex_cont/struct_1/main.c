@@ -1,13 +1,31 @@
 #include <stdio.h>
 
+//Enumerartion: ein enum ist eine Aufzählung in dem unten gezeigten Besispiel
+//sind die namen FAMILY,SCHOOL und OTHER nichts anderes als 1,2,3
+//diese könne beispielsweise mit eine Switch Anweisung einfach abgefangen werden
+
+typedef enum realtionship
+{
+    FAMILY,
+    SCHOOL,
+    OTHER,
+}relation_t;
+
+//Anhand fon dem nächsten typedef wird gezeigt wie man strukturen in strukturen verpacken kann
+typedef struct
+{
+    unsigned int year;
+    unsigned int month;
+    unsigned int day;
+}date_t;
+
 //TYPEDEF 1.
 typedef struct Friend //typedef kann auch in der typdefinition wie hier verwendet werden, üblich
 {
     char name[50];
     char prename[50];
-    unsigned int year;
-    unsigned int month;
-    unsigned int day;
+    date_t date;
+    relation_t rel;
 
 }Friend_t; //der durch typedef verwendete NAme muss dann hinter dem geschweiften klammernpaar angegebene werden
 
@@ -21,21 +39,50 @@ typedef struct Friend //typedef kann auch in der typdefinition wie hier verwende
 // zBsp: friend.name ==> friend->name werden
 
 //der -> Operator ersätzt die derefferenzierungsmethode über (*friend).prename beispielsweise
+
+void print_date(date_t *date)
+{
+    printf("%d.%d.%d\n",date->day,date->month,date->year);
+}
+
 void print_friend(Friend_t *friend)
 {
     printf("%s %s\n",friend->prename,friend->name);
-    printf("%u.%u.%u\n",friend->day,friend->month,friend->year);
+    print_date(&friend->date);
+
+    switch(friend->rel)
+    {
+        case FAMILY:
+        {
+            printf("I know him from Family.\n");
+            break;
+        }
+        case SCHOOL:
+        {
+            printf("I know him from school.\n");
+            break;
+        }
+        case OTHER:
+        {
+            printf("I know him from somewhereelse.\n");
+            break;
+        }
+    }
 }
+
 
 //### END Function Declaration ###
 
 int main()
 {
     //way to initialise a struct
-    Friend_t jan = {.name="Kautz",.prename = "Alex",.year = 1989, .month = 9, .day = 14 };
+    Friend_t jan = {.name="Kautz",.prename = "Alex",.date ={.year = 1989, .month = 9, .day = 14},.rel = FAMILY};
+                                            //       A       A
+                                            //      | |     | |
+    //hier sieht man das wenn strukturen ineinander verschachtelt werden die struktur beim initialiesieren mit weiteren punktoperatoren und geschweiften klammern versehen werden muss
 
-    Friend_t peter = {.name="Lustig",.prename = "Peter",.year = 1960, .month = 3, .day = 2 };
-    Friend_t hans = {.name="Maier",.prename = "Hans",.year = 1940, .month = 12, .day = 3 };
+    Friend_t peter = {.name="Lustig",.prename = "Peter",.date ={.year = 1960, .month = 3, .day = 2},.rel = SCHOOL };
+    Friend_t hans = {.name="Maier",.prename = "Hans",.date ={.year = 1940, .month = 12, .day = 3},.rel = OTHER };
 
     //strukturen in arrays abspeichern
 
