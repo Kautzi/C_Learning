@@ -38,6 +38,27 @@ int main()
 
     FILE *in_file = fopen(input_file_path,"r"); //create a FILE pointer and open the file stored in input_file_path in read "r" mode
 
+    if(in_file == NULL)
+    {
+        return 1;
+    }
+
+    char** saetze = create_s_matrix(10,100);
+    
+
+    //read rows from FILE in_file
+    for(uint32_t i = 0; i < 10 ;i++)
+    {
+        fgets(saetze[i],100,in_file);
+
+
+    }
+
+
+    for(uint32_t i = 0; i < 10;i ++)
+    {
+        printf("%s",saetze[i]);
+    }
     return 0;
 }
 
