@@ -13,7 +13,8 @@ Willkommen bei der nächsten Programmier-Übung in diesem Kurs.
 - Speichere die sortierten Werte in der Datei wieder ab*/
 
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdlib.h>//qsort()
+#include <string.h>//für strncpy()
 
 //### DEFINES ###
 #define DPATH "D:\\Programmieren\\C_Learning\\Chapter12_Advanced1\\Alex_cont\\Exercise\\"
@@ -28,6 +29,15 @@ int comp(const void* val_1, const void* val_2); //Hilfs Funktion für qsort
 
 int main(int argc, char** argv)
 {
+// Erst Abfrage ob der dateiname in argc 2 enthalten ist
+if(argc == 1)
+{
+printf("Du hast keine Datei angegeben.");
+}
+
+//Kopiere den Datei Pfad in argc 2 in Datapah
+char PATH[100]=strncpy(PATH,DPATH,100);
+strncat(PATH,argv[2],100);
 
 
     return 0;
@@ -41,11 +51,11 @@ int comp(const void* val_1, const void* val_2)
     ARR_TYPE RIGHT = (*(ARR_TYPE*)val_1);
     ARR_TYPE LEFT = (*(ARR_TYPE*)val_2);
 
-    if(left < right)
+    if(LEFT < RIGHT)
     {
         return 1;
     }
-    else if(left > right)
+    else if(LEFT > RIGHT)
     {
         return -1;
     }
