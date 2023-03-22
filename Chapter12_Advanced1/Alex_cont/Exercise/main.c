@@ -70,6 +70,8 @@ for(int i = 0; i < length; i ++)
 
 }
 printf("\n\n");
+//NEXT schreiben der sortierten Zahlen in eine neue Datei!!
+FILE* fout=fopen();
 
 
     return 0;
