@@ -17,7 +17,7 @@ Willkommen bei der nächsten Programmier-Übung in diesem Kurs.
 #include <string.h>//für strncpy()
 
 //### DEFINES ###
-char DPATH[]= "D:\\Programmieren\\C_Learning\\Chapter12_Advanced1\\Alex_cont\\Exercise\\";
+#define FSCANF_FPRINTF //um verschiedene arten zum schreiben und lesen von dateien aus zu probieren FGETS_FPUTS, FWRITE_FREAD
 #define ARR_TYPE  int
 //### END DEFINES ###
 
@@ -30,8 +30,8 @@ int comp(const void* val_1, const void* val_2); //Hilfs Funktion für qsort
 int main(int argc, char** argv)
 {
 //### Variablen ###
-
-int length = atoi(argv[2]);//wandle den dritten Parameter in in um, ist die Anzahl der Zahlen
+char DPATH[]= "D:\\Programmieren\\C_Learning\\Chapter12_Advanced1\\Alex_cont\\Exercise\\";
+int length = atoi(argv[2]);//wandle den dritten Parameter in int um, ist die Anzahl der Zahlen
 int numbers[100]={'\0'}; //Variable um die Werte aus den dateien ab zu speichern
 //### END Variablen ###
 
@@ -41,16 +41,36 @@ if(argc == 1)
 printf("Du hast keine Datei angegeben.\n");
 }
 
+
 //Kopiere den Datei Pfad in argc 2 in Datapah
+//Input File PATH im argv[1]
 char input_file_path[101]={'\0'};
 strncpy(input_file_path,DPATH,100);
 strncat(input_file_path,argv[1],100);
+//output_file_path im argv[3]
+char output_file_path[100]={'\0'};
+strncpy(output_file_path,DPATH,100);
+strncat(output_file_path,argv[3],100);
 
+//Open the imput file in read mode
 FILE *fp =fopen(input_file_path,"r");//öffne die in input_file_path gespeicherte Datei im lese Modus
+//check that fp isnt NULL
 if(fp==NULL)
 {
     return 1;
 }
+//open the output file and check that it isnt NULL
+FILE* fout=fopen(output_file_path,"w");
+if(fout == NULL)
+{
+    return 1;
+}
+
+
+
+//############ START FSCANF_FPRINTF #######################
+//Here is the code for reading and writing with fscanf and fprintf
+#ifdef FSCANF_FPRINTF
 for(int i = 0; i < length; i ++)
 {
     fscanf(fp,"%d",&numbers[i]);
@@ -58,7 +78,7 @@ for(int i = 0; i < length; i ++)
 
 }
 printf("\n\n");
-fclose(fp);//schliese die Datei
+
 //### END Lesen der Nummern
 
 qsort(numbers,(size_t)length,sizeof(int),comp);
@@ -71,9 +91,33 @@ for(int i = 0; i < length; i ++)
 }
 printf("\n\n");
 //NEXT schreiben der sortierten Zahlen in eine neue Datei!!
-FILE* fout=fopen();
+
+for(int i = 0; i < length; i ++)
+{
+    fprintf(fout,"%d\n",numbers[i]);
+}
+//after writing all sorted numbers to output_file_path
+//read them again and print thair values
+//############ END FSCANF_FPRINTF #######################
+#endif
+
+//############  START FGETS_FPUTS #######################
+//Here we read and write files with fgets and fputs
+#ifdef FGETS_FPUTS
+//code mising
+#endif
+
+//############  START FWRITE_FREAD  #######################
+#ifdef FWRITE_FREAD
+//code missing
+#endif
 
 
+
+
+//at the end we close all files
+fclose(fout);
+fclose(fp);//schliese die Datei
     return 0;
 }
 //### END MAIN
