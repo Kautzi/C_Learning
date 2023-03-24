@@ -17,7 +17,7 @@ Willkommen bei der nächsten Programmier-Übung in diesem Kurs.
 #include <string.h>//für strncpy()
 
 //### DEFINES ###
-#define FSCANF_FPRINTF //um verschiedene arten zum schreiben und lesen von dateien aus zu probieren FGETS_FPUTS, FWRITE_FREAD
+#define FGETS_FPUTS //um verschiedene arten zum schreiben und lesen von dateien aus zu probieren FGETS_FPUTS, FWRITE_FREAD
 #define ARR_TYPE  int
 //### END DEFINES ###
 
@@ -33,6 +33,7 @@ int main(int argc, char** argv)
 char DPATH[]= "D:\\Programmieren\\C_Learning\\Chapter12_Advanced1\\Alex_cont\\Exercise\\";
 int length = atoi(argv[2]);//wandle den dritten Parameter in int um, ist die Anzahl der Zahlen
 int numbers[100]={'\0'}; //Variable um die Werte aus den dateien ab zu speichern
+char FGETS_NUMBERS[100]={'\0'};
 //### END Variablen ###
 
 // Erst Abfrage ob der dateiname in argc 2 enthalten ist
@@ -103,8 +104,27 @@ for(int i = 0; i < length; i ++)
 
 //############  START FGETS_FPUTS #######################
 //Here we read and write files with fgets and fputs
+//char FGETS_NUMBERS[100]={'\0'}; <== input variable
 #ifdef FGETS_FPUTS
-//code mising
+
+int i=0;
+while(fgets(FGETS_NUMBERS,length,fp)!=NULL)
+{
+    printf("%s\n",FGETS_NUMBERS);
+    numbers[i]=atoi(FGETS_NUMBERS);
+}
+//first sort numbers
+qsort(numbers,(size_t)length,sizeof(int),comp);
+
+
+//than format numbers to string with sprintf func
+for(int j = 0; j< length; j ++)
+{
+    sprintf(FGETS_NUMBERS,"%d\n",numbers[j]);
+    fputs(FGETS_NUMBERS,fout);
+}
+
+
 #endif
 
 //############  START FWRITE_FREAD  #######################
