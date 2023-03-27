@@ -111,9 +111,13 @@ int i=0;
 while(fgets(FGETS_NUMBERS,length,fp)!=NULL)
 {
     printf("%s\n",FGETS_NUMBERS);
-    numbers[i]=atoi(FGETS_NUMBERS);
+    numbers[i++]=atoi(FGETS_NUMBERS);
+
+
 }
 //first sort numbers
+
+
 qsort(numbers,(size_t)length,sizeof(int),comp);
 
 

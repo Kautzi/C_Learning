@@ -17,12 +17,20 @@ int main()
     //### Variables ###
 
     //float* array = createArray(50,3);
-    Vector* vec = createVector(5,9);
-    vec->data[0]=40;
-    vec->data[1]=4;
-    vec->data[2]=-10;
-    vec->data[3]=1;
-    vec->data[4]=50;
+    Vector* vec1 = createVector(3,0);
+    Vector* vec2 = createVector(3,0);
+    Vector* res = createVector(3,0);
+    char Path_In[]={"D:\\Programmieren\\C_Learning\\Chapter13_VectorStruct\\Alex_Cont\\Vector_Struct\\input.txt"};
+    char Path_Out[]={"D:\\Programmieren\\C_Learning\\Chapter13_VectorStruct\\Alex_Cont\\Vector_Struct\\output.txt"};
+    //Test Values
+    vec1->data[0]=40;
+    vec1->data[1]=4;
+    vec1->data[2]=-10;
+
+    vec2->data[0]=5;
+    vec2->data[1]=-1;
+    vec2->data[2]=6;
+
 
 
     //### END Variables ###
@@ -30,16 +38,26 @@ int main()
     //### TEST AREA ###
     {
     //#################
-        for(unsigned int i = 0; i < vec->length; i ++)
-        {
-            printf("%f\n",vec->data[i]);
-        }
+        //readInVectorData(vec,Path_In);
+        //res = addVectors(vec1,vec2);
+        //printVector(res);
+        //res = subVectors(vec1,vec2);
+        //printVector(res);
+        //res->data[0]=multiplyVectors(vec1,vec2);
+        //printf("%f\n",res->data[0]);
+        res = multiplyScalar(vec1,4);
+        printVector(res);
+        res = divideScalar(res,4);
+        printVector(res);
 
+        /*writeOutVectorData(vec,Path_Out);
         printf("Mean: %f\n",meanVector(vec));
         printf("Min: %f\n",minVector(vec));
         printf("Max: %f\n",maxVector(vec));
-
-        freeVector(vec);
+        */
+        freeVector(vec1);
+         freeVector(vec2);
+          freeVector(res);
     //#################
     }
     //### END TEST ###
@@ -50,95 +68,33 @@ int main()
 //### END MAIN ###
 
 //### DEFINITIONS ###
-float *createArray(const unsigned int length, const float value)//TEST ->> PASS
+
+Vector *multiplyScalar(const Vector *vec, const float scalar)//TEST ->> PASS
 {
-    float * array = (float*)malloc(sizeof(float)*length);
-    if(array == NULL)//if malloc failed arry is == NULL
+    Vector* res = createVector(vec->length,0);
+    if(res == NULL)
     {
         return NULL;
     }
-    //initialise all elements in array with value
-    for(unsigned int i = 0; i < length; i ++)
+    for(uint32_t i = 0; i < vec->length; i ++)
     {
-        array[i]=value;
+        res->data[i]= vec->data[i] * scalar;
     }
-    return array;
+    return res;
+
 }
 
-float *freeArray(float *array) //TEST ->> PASS
+Vector *divideScalar(const Vector *vec, const float scalar)
 {
-    free(array);
-    array=NULL;
-    return array;
-}
-
-Vector *createVector(const unsigned int length, const float value)//TEST ->> PASS
-{
-    Vector * vec = (Vector*)malloc(sizeof(float)*length + sizeof(unsigned int));//allocate memory for the lenght of float data + the unsigned int in Vector
-    if(vec == NULL)
+    Vector* res = createVector(vec->length,0);
+    if(res == NULL || scalar == 0)
     {
         return NULL;
     }
-
-    //create array in Vector
-    vec->data=createArray(length,value);
-    //initialise every float *data element with value
-    for(unsigned int i = 0; i < length; i ++)
+    for(uint32_t i = 0; i < vec->length; i ++)
     {
-    vec->data[i]=value;
+        res->data[i]= vec->data[i] / scalar;
     }
-    vec->length = length;
-    return vec;
-}
+    return res;
 
-Vector *freeVector(Vector *vector)//TEST ->> PASS
-{
-    free(vector->data);
-    freeArray(vector->data);
-    free(vector);
-    vector=NULL;
-
-    return vector;
 }
-
-float meanVector(const Vector *vector)//TEST ->> PASS
-{
-    float mean = 0;
-    for(uint32_t i = 0; i < vector->length; i ++)
-    {
-    mean+=vector->data[i];
-    }
-    return mean/(float)vector->length;
-}
-
-float minVector(const Vector *vector)//TEST ->> PASS
-{
-    float temp = vector->data[0];
-for(unsigned int i = 1; i < vector->length;i++)
-{
-if(temp > vector->data[i])
-{
-    temp = vector->data[i];
-}
-}
-return temp;
-}
-
-float maxVector(const Vector *vector)//TEST ->> PASS
-{
-     float temp = vector->data[0];
-for(unsigned int i = 1; i < vector->length;i++)
-{
-if(temp < vector->data[i])
-{
-    temp = vector->data[i];
-}
-}
-return temp;
-}
-
-int readInVectorData(Vector *vec, const char *filepath);
-
-int writeOutVectorData(Vector *vec, const char *filepath);
-
-void printVector(const Vector *vector);
