@@ -1,6 +1,7 @@
 #include "Vector.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 
 //### DEFINES ###
@@ -31,7 +32,7 @@ int main()
     vec2->data[1]=-1;
     vec2->data[2]=6;
 
-
+    assert(vec1 != NULL);
 
     //### END Variables ###
 
