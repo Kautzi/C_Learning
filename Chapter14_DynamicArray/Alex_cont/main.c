@@ -15,14 +15,17 @@
 int main()
 {
     //### Variables ###
-    //...
+    dynamic_array_t *dynarray = createDynamicArray();
     //### END Variables ###
-    //...
+
+
+    expandDynamicArray(dynarray);
+    freeDynamicArray(dynarray);
     return 0;
 }
 
 //### FUNC DEFINES ###
-dynamic_array_t * createDynamicArray()
+dynamic_array_t * createDynamicArray()//FIRST Check ->> PASS
 {
 
     //allocate memory for initial Array
@@ -44,9 +47,24 @@ dynamic_array_t * createDynamicArray()
     return array;
 }
 
-void * freeDynamicArray(dynamic_array_t *array );
+void * freeDynamicArray(dynamic_array_t *array )//FIRST Check ->> PASS
+{
+    array->data=NULL;
+    free(array->data);
+    array=NULL;
+    free(array);
 
-void expandDynamicArray(dynamic_array_t *array);
+    return NULL;
+}
+
+void expandDynamicArray(dynamic_array_t *array)//FIRST Check ->>PASS
+{
+    array->capacity *= GROWTH_FACTOR;
+    if(realloc(array->data,array->capacity * sizeof(float))==NULL)
+    {
+        freeDynamicArray(array);
+    }
+}
 
 void shrinkDynamicArray(dynamic_array_t *array);
 
