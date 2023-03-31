@@ -18,8 +18,14 @@ int main()
     dynamic_array_t *dynarray = createDynamicArray();
     //### END Variables ###
 
-
-    expandDynamicArray(dynarray);
+    for(uint32_t i = 0 ; i < 20; i++)
+    {
+    pushValue(dynarray,2);
+    }
+    for(uint32_t i = 0 ; i < 20; i++)
+    {
+    printf("%f\n",popValue(dynarray));
+    }
     freeDynamicArray(dynarray);
     return 0;
 }
@@ -66,11 +72,43 @@ void expandDynamicArray(dynamic_array_t *array)//FIRST Check ->>PASS
     }
 }
 
-void shrinkDynamicArray(dynamic_array_t *array);
+void shrinkDynamicArray(dynamic_array_t *array)//FIRST Check ->>PASS
+{
+    array->capacity /= SHRINK_FACTOR;
+    if(realloc(array->data,array->capacity * sizeof(float))==NULL)
+    {
+        freeDynamicArray(array);
+    }
+}
 
-void pushValue(dynamic_array_t *array, const float value);
+void pushValue(dynamic_array_t *array, const float value)//FIRST Check ->>PASS
+{
 
-float popValue(dynamic_array_t *array);
+    if(array->length + 1 <= array->capacity)
+    {   array->length++;
+        array->data[array->length-1]=value;
+    }
+    else
+    {
+        expandDynamicArray(array);
+        array->length++;
+    }
+    array->data[array->length-1]=value;
+}
+
+float popValue(dynamic_array_t *array)
+{
+    if(array->length - 1 <= array->capacity/SHRINK_FACTOR)
+    {   array->length--;
+        shrinkDynamicArray(array);
+        return array->data[array->length-1];
+    }
+    else
+    {
+        array->length--;
+       return array->data[array->length-1];
+    }
+}
 
 void cleanDynamicArray(dynamic_array_t *array);
 
