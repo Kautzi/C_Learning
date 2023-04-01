@@ -55,10 +55,12 @@ dynamic_array_t * createDynamicArray()//FIRST Check ->> PASS
 
 void * freeDynamicArray(dynamic_array_t *array )//FIRST Check ->> PASS
 {
-    array->data=NULL;
+
     free(array->data);
-    array=NULL;
+    array->data=NULL;
+
     free(array);
+    array=NULL;
 
     return NULL;
 }
@@ -96,20 +98,46 @@ void pushValue(dynamic_array_t *array, const float value)//FIRST Check ->>PASS
     array->data[array->length-1]=value;
 }
 
-float popValue(dynamic_array_t *array)
+float popValue(dynamic_array_t *array)//FIRST Check ->> PASS
 {
-    if(array->length - 1 <= array->capacity/SHRINK_FACTOR)
-    {   array->length--;
+    if(array->length - 1 <= array->capacity/SHRINK_FACTOR && array->length-1 > 0)
+    {
+        array->length--;
         shrinkDynamicArray(array);
         return array->data[array->length-1];
     }
-    else
+    else if (array->length-1 != 0)
     {
         array->length--;
        return array->data[array->length-1];
     }
+    else
+    {
+        return array->data[array->length];
+    }
 }
 
-void cleanDynamicArray(dynamic_array_t *array);
+void cleanDynamicArray(dynamic_array_t *array)
+{
+    if(array == NULL || array->data == NULL)
+    {
+        return;
+    }
+    free(array->data);
+    array->data = NULL;
+    array->length = 0U;
+    array->capacity = 0U;
+    return;
 
-void printDynamicArray(const dynamic_array_t *array);
+
+}
+
+void printDynamicArray(const dynamic_array_t *array)
+{
+    printf("Length: %u, Capacity: %u\n",array->length,array->capacity);
+    for(uint32_t i = 0; i < array->length;i ++)
+    {
+        printf("%f\n",array->data[i]);
+    }
+    printf("\n");
+}
