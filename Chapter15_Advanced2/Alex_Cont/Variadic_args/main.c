@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h> //for Variadic Functions
+#include <string.h>
 
 /*### Description ###
 To implement functions like "printf" its necessary to have a variadic cont of elements
@@ -43,7 +44,7 @@ int main()
     //double avg = average(3,1.0,2.0,3.0);
     //printf("%lf\n",avg);
 
-    my_printf("%c --- %c\n",'A','B');
+    my_printf("%c --- %c,%d, %s, ich bin ein float %f, und ich ein long float %lf\n",'A','B',45,"Ich bin ein String",5.78,77.4);
 
     return 0;
 }
@@ -88,6 +89,49 @@ void my_printf(char *format, ...)
             {
                 char value = (char)va_arg(args,int);        //if its 'c' pop the first arg in args va_arg points on the next argument
                 putchar(value);                             //print a singel character
+            }
+            else if(*format == 's')
+            {
+                char * value = (char*)va_arg(args,char*);
+                //puts(value);                              //puts outputs a hole string at once to the stdout
+                while(*value !='\0')                        //same could be done with putchar and a while loop
+                {
+                putchar(*value);
+                value++;
+                }
+            }
+            else if (*format == 'd')
+            {
+                int value = (int)va_arg(args,int);
+                char buffer[48];
+                sprintf(buffer,"%d",value);
+                //puts(buffer);                           //puts hangs a new line '\n' at the end of the string
+                fputs(buffer,stdout);                     //while fputs doesent but you have to tell the output stream
+            }
+            else if(*format == 'f')
+            {
+                double value = va_arg(args,double);
+                char buffer[100];
+                sprintf(buffer,"%f",value);
+                //puts(buffer);                           //puts hangs a new line '\n' at the end of the string
+                fputs(buffer,stdout);
+            }
+            else if(*format == 'l')
+            {
+                format++;
+                if(*format == 'f')
+                {
+                double value = va_arg(args,double);
+                char buffer[100];
+                sprintf(buffer,"%lf",value);
+                //puts(buffer);                           //puts hangs a new line '\n' at the end of the string
+                fputs(buffer,stdout);
+                }
+                else
+                {
+                    format --;
+                }
+                
             }
             else
             {
