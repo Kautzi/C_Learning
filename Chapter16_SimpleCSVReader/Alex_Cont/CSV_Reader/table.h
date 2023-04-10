@@ -1,6 +1,10 @@
 #ifndef TABLE_H
 #define TABLE_H
 
+//### INCLUDES ###
+#include <stdio.h>
+//### END INCLUDES ###
+
 //### DEFINES ###
 #define INIT_CAP 10U //for rows and colls
 #define INIT_CAP_CELL 5U //init capacity of an cell
