@@ -6,37 +6,42 @@
 #include "CsvReader.h"
 #include "table.h"
 
+//### DEFINES ###
+#define NEW_LINE_CHARACTER_ASCII ('\n')
+//### END DEFINE ###
+
 //### FUNCTION DEFINITIONS ###
-size_t line_count(const char *const file_path)
+size_t line_count(const char *const file_path)//FIRST CHECK ->> PASS
 {
     FILE *const fp = fopen(file_path,"r");
 
     if(fp == NULL)
     {
-        printf(stderr,"NOT able to open the file: %s!\n",strerror(errno));
-        return -1;
+        fprintf(stderr,"NOT able to open the file: %s!\n",strerror(errno));
+        return 1;
     }
-    fpos_t* zeiger = 0;
-    if(fgetpos(fp,zeiger) != NULL)
+
+    size_t count = 0;
+    char temp;
+    while(fscanf(fp,"%c",&temp) != EOF)
     {
-        return -1;
-    }
-    while(fsetpos(fp,zeiger) == 0)
-    {
-        *zeiger++;
+        if(temp == NEW_LINE_CHARACTER_ASCII)
+        {
+        count++;
+        }
     }
 
 
-    fclose(file_path);
-    return *zeiger;
+    fclose(fp);
+    return count;
 }
 
 void read_simple_csv(const char *const file_path,records_t * const records)
 {
-    FILE *const fp = fopen(file_path,"r")
+    FILE *const fp = fopen(file_path,"r");
     if(fp == NULL)
     {
-        printf(stderr,"NOT able to open the file: %s!\n",strerror(errno));
+        fprintf(stderr,"NOT able to open the file: %s!\n",strerror(errno));
         return -1;
     }
 
@@ -51,7 +56,7 @@ void read_simple_csv(const char *const file_path,records_t * const records)
 
 void write_simple_csv(const char *const file_path,const records_t * const records)
 {
-    FILE *const fp = fopen(file_path,"w")
+    FILE *const fp = fopen(file_path,"w");
     if(fp == NULL)
     {
         printf(stderr,"NOT able to open the file: %s!\n",strerror(errno));
