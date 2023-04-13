@@ -69,7 +69,84 @@ void free_records(records_t * records)
     return;
 }
 
+void print_records(const records_t * const records, const char * const header)
+{
+    if(records == NULL)
+    {
+        return;
+    }
 
+    if(header != NULL)
+    {
+        printf("Records: %s\n",header);
+    }
+
+    for(size_t i = 0; i < records->num; i++)
+    {
+        printf("%c,%d\n",records->values[i].value_a,records->values[i].value_b);
+
+    }
+
+    printf("\n");
+}
+
+int comp_ascending(const  void* left_v, const void* right_v)
+{
+const val_pairs_t *const left= (val_pairs_t*)(left_v);
+const val_pairs_t *const right= (val_pairs_t*)(right_v);
+
+if(left->value_b < right->value_b)
+return -1;
+else if (left->value_b < right->value_b)
+return 1;
+else
+return 0;
+
+}
+
+int comp_descending(const  void* left_v, const void* right_v)
+{
+const val_pairs_t *const left= (val_pairs_t*)(left_v);
+const val_pairs_t *const right= (val_pairs_t*)(right_v);
+
+if(left->value_b > right->value_b)
+return -1;
+else if (left->value_b > right->value_b)
+return 1;
+else
+return 0;
+
+}
+
+void sort_records(const records_t * const records, const sorting_scheme_t sorting_scheme)
+{
+    if(NULL == records)
+    {
+        return;
+    }
+
+    switch(sorting_scheme)
+    {
+        case SORTING_SCHEME_ASCENDING:
+        {
+        qsort(records->values,records->num,sizeof(val_pairs_t),comp_ascending);
+        break;
+        }
+
+        case SORTING_SCHEME_DESCENDING:
+        {
+        qsort(records->values,records->num,sizeof(val_pairs_t),comp_descending);
+        break;
+        }
+        default:
+        {
+
+        break;
+        }
+
+    }
+
+}
 
 
 
@@ -79,6 +156,7 @@ The create_table function allocates memory for an initial table with
 an initial capacity of rows and colls defined by INIT_CAP(10rows and 10colls).
 The initial capacity of a cell should be defines by INIT_CAP_CELL
 ##################*/
+/*
 table_t *create_table()//First Check ->> Pass
 {
     //First allocate memory for aninitial table_t struct
@@ -126,12 +204,14 @@ table_t *create_table()//First Check ->> Pass
 
     return table;
 }
-//### END create_table(); ###
+
+*///### END create_table(); ###
 
 /*adjust_cell():
 The asjust_cell() function takes table_t struct input whitch shows how much memory is currently available
 determined by the value uint32_t cap_zell in the table_t struct and compares it with the data string input.
 If the input string is grater than the cap_zell value the data[][] will be raised to the input size +1*/
+/*
 char * adjust_cell(table_t *table,uint32_t row,uint32_t coll, size_t input)
 {
     if(table->cap_zell <= input)
@@ -144,11 +224,14 @@ char * adjust_cell(table_t *table,uint32_t row,uint32_t coll, size_t input)
 
     return table->data[row][coll];
 }
+*/
 //### END adjust_cell(); ###
-
+/*
 table_t *expand_table(table_t table)//only row and colls with initial length for cell
 {
 
     return ;
 }
+
+*/
 //### END FUNC DEFINITIONS ###
