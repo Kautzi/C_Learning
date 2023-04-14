@@ -10,6 +10,7 @@ open and read the Values of data_in.txt sort and write the values int a new file
 #include <stdlib.h> //malloc ...
 #include <string.h> //strncat ...
 #include "table.h"
+#include "CsvReader.h"
 //### END INCLUDES ###
 
 //### DEFINES ###
@@ -26,7 +27,7 @@ open and read the Values of data_in.txt sort and write the values int a new file
 //Strg+Alt+A für Übergabe argv
 int main(int argc, char **argv)
 {
-//char Com_PATH[100] ={"D:\\Programmieren\\C_Learning\\Chapter16_SimpleCSVReader\\Alex_Cont\\CSV Reader"};
+char Com_PATH[100] ={"D:\\Programmieren\\C_Learning\\Chapter16_SimpleCSVReader\\Alex_Cont\\CSV_Reader\\"};
 //### Check the input from argc
 if(argc == 1)//First Check ->> PASS
 {
@@ -44,14 +45,45 @@ else if(argc == 3)//First Check ->> PASS
     return 1;
 }
 //### END check of argc
+{//Alternative Version Test later
 //### Variable Declaration/Definition
-table_t *table = create_table();
+//table_t *table = create_table();
 //### END Variable Declaration
+}
+
+//create file path with argv[1] as relative input file path + Com_PATH
+char INPUT_FILE_PATH[100];
+strncpy(INPUT_FILE_PATH,Com_PATH,100);
+strncat(INPUT_FILE_PATH,argv[1],20);
+
+//create file path with argv[2] for output
+char OUTPUT_FILE_PATH[100];
+strncpy(OUTPUT_FILE_PATH,Com_PATH,100);
+strncat(OUTPUT_FILE_PATH,argv[2],20);
 
 //### Test Area: ###
-//Check if the table_t struct works
-strncpy(table->data[1][5],"Cell",5);
-printf("%s\n",table->data[2][5]);
+
+
+records_t* records = create_records();
+read_simple_csv(INPUT_FILE_PATH,records);
+print_records(records, "Unsorted:\n");
+if(strncmp(argv[3],"up",3)==0)
+{
+
+sort_records(records,SORTING_SCHEME_ASCENDING );
+print_records(records, "ASCENDING Sorted:\n");
+}
+else if(strncmp(argv[3],"down",5)==0)
+{
+sort_records(records,SORTING_SCHEME_DESCENDING );
+print_records(records, "DESCENDING Sorted:\n");
+}
+else
+{
+printf("No valid sorting scheme!\n");
+}
+write_simple_csv(OUTPUT_FILE_PATH,records);
+
 
 //### END Test Area ###
 

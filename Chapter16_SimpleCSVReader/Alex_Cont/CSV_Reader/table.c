@@ -97,7 +97,7 @@ const val_pairs_t *const right= (val_pairs_t*)(right_v);
 
 if(left->value_b < right->value_b)
 return -1;
-else if (left->value_b < right->value_b)
+else if (left->value_b > right->value_b)
 return 1;
 else
 return 0;
@@ -111,7 +111,7 @@ const val_pairs_t *const right= (val_pairs_t*)(right_v);
 
 if(left->value_b > right->value_b)
 return -1;
-else if (left->value_b > right->value_b)
+else if (left->value_b < right->value_b)
 return 1;
 else
 return 0;
