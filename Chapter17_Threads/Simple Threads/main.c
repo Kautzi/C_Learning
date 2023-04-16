@@ -3,8 +3,10 @@
 
 #include <pthread.h>
 
-void* function(void* args)
-{
+#define NUM_THREAD 3
+
+void* function(void* args)                      //der Funktionsaufbau muss genau so aussehen der einem thread übergeben wird
+{                                               //möchte man mehr parameter übergeben muss das über struckt oder arrays/pointer geschehen
     int arg=*((int*)(args));
 
     if(arg == 1)
@@ -15,6 +17,11 @@ void* function(void* args)
     if(arg == 2)
     {
     printf("Second Input\n");
+    }
+
+    if(arg <=2)
+    {
+    printf("Next Input\n");
     }
 
     int *result = (int*)malloc(sizeof(int));
@@ -31,23 +38,40 @@ void* function(void* args)
 int main()
 {
 
-pthread_t thread1;
-pthread_t thread2;
+pthread_t threads[NUM_THREAD];
+int *results[NUM_THREAD];
 
-int input1 = 1;
-int input2 = 2;
+int inputs[NUM_THREAD];
 
-pthread_create(&thread1,NULL,&function,&input1);
-pthread_create(&thread2,NULL,&function,&input2);
+for(int i = 0; i < NUM_THREAD;i++)
+{
+    inputs[i]=i+1;
 
-int * result1;
-int * result2;
+}
 
-pthread_join(thread1,(void*)(&result1));
-pthread_join(thread2,(void*)(&result2));
+for(int i = 0; i < NUM_THREAD;i++)
+{
+   pthread_create(&threads[i],NULL,&function,&inputs[i]);
 
-printf("Result of Thread1 = %d\n",*result1);
-printf("Result of Thread2 = %d\n",*result2);
+}
+
+
+//... hier kann wärend der zusätzlichen thread ausführung beliebiger code stehen der ausgeführt wird
+
+for(int i = 0; i < NUM_THREAD;i++)
+{
+   pthread_join(threads[i],(void*)(results[i]));
+
+
+}
+
+for(int i = 0; i < NUM_THREAD;i++)
+{
+
+   printf("Result of Thread%d = %d\n",i+1,*results[i]);
+
+}
+
 
     return 0;
 }
